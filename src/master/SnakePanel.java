@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
 /**
 *
@@ -35,7 +36,7 @@ import javax.swing.border.TitledBorder;
 public class SnakePanel extends JPanel implements Runnable{
 static Toolkit tool = Toolkit.getDefaultToolkit();
 Random r = new Random();
-List<Point> points = new ArrayList<Point>();
+List<Point> points = new ArrayList<>();
 Thread th;
 int dx=-10,dy=0;
 static SnakePanel pl;
@@ -67,7 +68,7 @@ UIManager.setLookAndFeel(info.getClassName());
 break;
 }
 }
-}catch(Exception e){
+}catch(ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e){
 System.out.println(e);
 }
 food = new Point(30,50);
@@ -75,6 +76,7 @@ th = new Thread(this);
 
 }
 @Override
+@SuppressWarnings("CallToThreadStopSuspendOrResumeManager")
 public void paint(Graphics g2){
 g =(Graphics2D)g2;
 g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -234,6 +236,7 @@ if(points.get(0).getY()<=0){
 collided=true;
 }
 }
+@SuppressWarnings({"override", "SleepWhileInLoop", "static-access"})
 public void run(){
 Thread me = Thread.currentThread();
 while(me==th){
@@ -265,6 +268,7 @@ jfm.setVisible(true);
 jfm.setLocation((int)(tool.getScreenSize().getWidth()-jfm.getWidth())/2,(int)tool.getScreenSize().getHeight()/2-jfm.getHeight()/2);
 KeyListener kl = new KeyAdapter(){
 @Override
+@SuppressWarnings("CallToThreadStopSuspendOrResumeManager")
 public void keyPressed(KeyEvent ke){
 if(ke.getKeyCode()==KeyEvent.VK_RIGHT){
 if(!pl.dir.equals("left")){
