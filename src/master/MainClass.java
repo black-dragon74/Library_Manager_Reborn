@@ -21,6 +21,7 @@ public class MainClass {
     public String user = "root";
     public String pwd = "ExDb20Tra"; //Change MySQL/MariaDb Password Here
     public String url = "jdbc:mysql://localhost:3306/libnk";
+    public static int unstat = 0;
     // End Db Connection
     
     // Begin Encryption Method
@@ -87,7 +88,6 @@ public class MainClass {
             while (rs.next()== true){
                 dbConnectExecute2Out1 = rs.getString(wget1);
                 dbConnectExecute2Out2 = rs.getString(wget2);
-                con.close();
             }
         }
         catch (ClassNotFoundException | SQLException e){
