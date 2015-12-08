@@ -9,6 +9,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.DriverManager;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -95,5 +96,8 @@ public class MainClass {
             System.out.println(e.getMessage());
             dbConnectExecute2Err = e.getMessage();
         }
+    }
+    public void showMessage(String msg){
+        JOptionPane.showMessageDialog(null,msg);
     }
   }

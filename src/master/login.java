@@ -140,7 +140,7 @@ public class login extends javax.swing.JFrame {
                 switch (a){
                     case 1 :
                        an = JOptionPane.showConfirmDialog(this,"Product Not Activated! Activate Now?"); 
-                        if (an == JOptionPane.YES_OPTION){dispose();}
+                        if (an == JOptionPane.YES_OPTION){dispose();new activation_form().setVisible(true);}
                         break;
                     case 2 :
                         an = JOptionPane.showConfirmDialog(this,"Product Blocked! Unlock?");
