@@ -6,8 +6,6 @@
 package master;
 import java.sql.*;
 import javax.swing.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 /**
  *
  * @author nick
@@ -38,7 +36,7 @@ public class login extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Please Login!");
+        setTitle("Login | Library Manager Reborn");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -153,7 +151,7 @@ public class login extends javax.swing.JFrame {
             }
         }
         catch (ClassNotFoundException | SQLException e){
-            
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_formWindowOpened
 

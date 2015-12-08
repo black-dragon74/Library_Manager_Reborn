@@ -54,8 +54,9 @@ public class MainClass {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()== true){
                 dbConnectExecute1Out = rs.getString(wget1);
+                con.close();
             }
-        }
+   }
         catch (ClassNotFoundException | SQLException e){
             System.out.println(e.getMessage());
             dbConnectExecute1Err = e.getMessage();
@@ -63,12 +64,14 @@ public class MainClass {
     }
     // dbConnect Method When You Just Have to exceute a sql command
     public String dbConnectUpdateErr=null;
+    @SuppressWarnings("ConvertToTryWithResources")
     public void dbConnectUpdate(String sql){
         try{
             Class.forName(cl);
             Connection con = DriverManager.getConnection(url,user,pwd);
             Statement stmt = con.createStatement();
             stmt.executeUpdate(sql);
+            con.close();
         }
         catch (ClassNotFoundException | SQLException e){
             dbConnectUpdateErr = e.getMessage();
@@ -85,6 +88,7 @@ public class MainClass {
             while (rs.next()== true){
                 dbConnectExecute2Out1 = rs.getString(wget1);
                 dbConnectExecute2Out2 = rs.getString(wget2);
+                con.close();
             }
         }
         catch (ClassNotFoundException | SQLException e){
