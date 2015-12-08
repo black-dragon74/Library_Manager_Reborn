@@ -37,12 +37,32 @@ public class Integrity_Manager extends javax.swing.JFrame {
         setResizable(false);
 
         jButton1.setText("ACTIVATE PRODUCT");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("LOCK PRODUCT");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("UNLOCK PRODUCT");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("RESET PRODUCT");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -66,16 +86,87 @@ public class Integrity_Manager extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton4))
-                .addGap(73, 73, 73))
+                .addGap(59, 59, 59))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       MainClass nick = new MainClass();
+       String feed;
+       nick.dbConnectExecute1("select * from pro_stat", "CStat");
+       feed = nick.dbConnectExecute1Out;
+       if (feed.equals("403") || feed.equals("402")){
+           nick.showMessage("Already Activated!");
+           String feed_err;
+           feed_err = nick.dbConnectExecute1Err;
+           if (feed_err != null){
+               nick.showMessage(feed_err);
+           }
+       }
+       else {
+           new activation_form().setVisible(true);
+       }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        MainClass nick = new MainClass();
+        String feed;
+        nick.dbConnectExecute1("Select * from pro_stat", "CStat");
+        feed = nick.dbConnectExecute1Out;
+        if (feed.equals("402")){
+        new unblock_form().setVisible(true);
+        String err = nick.dbConnectExecute1Err;
+        if (err != null){
+            nick.showMessage(err);
+        }
+    }
+        else{
+            nick.showMessage("Product is already Unlocked!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       MainClass nick = new MainClass();
+       String feed;
+       nick.dbConnectExecute1("select * from pro_stat", "Cstat");
+       feed = nick.dbConnectExecute1Out;
+       if (feed.equals("402") || feed.equals("401")){
+           nick.showMessage("Already Locked!");
+           String er = nick.dbConnectExecute1Err;
+           if (er != null){
+               nick.showMessage(er);
+           }
+       }
+       else {
+           nick.confirm("Sure to Lock this product?", "Please Confirm");
+           if (nick.confirmOut.equals("yes")){
+               nick.dbConnectUpdate("truncate pro_stat");
+               nick.dbConnectUpdate("insert into pro_stat values ('402');");
+               String e = nick.dbConnectUpdateErr;
+               if (e != null){
+                   nick.showMessage(e);
+               }
+           }
+       }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+       MainClass nick = new MainClass();
+       nick.confirm("Sure to Reset "+"\n"+"This Will erase the follwing things :-"+"\n"+"- All Records"+"\n"+"- All Issue/Deposit History", "Destory Everything?");
+       if (nick.confirmOut.equals("yes")){
+           nick.resetProgramData();
+       }
+       else {
+       nick.showMessage("Whew! Saved");
+       }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -55,7 +55,6 @@ public class MainClass {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()== true){
                 dbConnectExecute1Out = rs.getString(wget1);
-                con.close();
             }
    }
         catch (ClassNotFoundException | SQLException e){
@@ -72,7 +71,6 @@ public class MainClass {
             Connection con = DriverManager.getConnection(url,user,pwd);
             Statement stmt = con.createStatement();
             stmt.executeUpdate(sql);
-            con.close();
         }
         catch (ClassNotFoundException | SQLException e){
             dbConnectUpdateErr = e.getMessage();
@@ -100,4 +98,22 @@ public class MainClass {
     public void showMessage(String msg){
         JOptionPane.showMessageDialog(null,msg);
     }
+    public String confirmOut;
+   public void confirm(String ques,String title){
+       int ans = JOptionPane.showConfirmDialog(null, ques,title, JOptionPane.YES_NO_OPTION);
+      
+       if (ans == JOptionPane.YES_OPTION){
+           confirmOut = "yes";
+       }
+       else {
+           confirmOut = "no";
+       }
+   }
+   public String getInputOut;
+   public void getInput(String quest){
+       getInputOut = JOptionPane.showInputDialog(null,quest);
+   }
+   public void resetProgramData(){
+   
+   }
   }

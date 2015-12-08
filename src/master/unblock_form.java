@@ -87,8 +87,7 @@ public class unblock_form extends javax.swing.JFrame {
       MainClass nick = new MainClass();
       String act = new String(codetf.getPassword());
       if (act.equals("Unblock_Software")){
-      } else {
-          nick.showMessage("Unblocking Software");
+      nick.showMessage("Unblocking Software");
           nick.dbConnectUpdate("truncate pro_stat");
           nick.dbConnectUpdate("insert into pro_stat values('403');");
           nick.showMessage("Software Unblocked!"+"\n"+"Please Restart");
@@ -96,6 +95,9 @@ public class unblock_form extends javax.swing.JFrame {
           if (err != null){
               nick.showMessage(""+err);
           }
+      } 
+      else {
+          
         }
     }//GEN-LAST:event_codetfCaretUpdate
 

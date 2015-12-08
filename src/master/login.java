@@ -3,6 +3,7 @@
  * Feel free to have fun with the code :)
  * You have all rights to do whatever you want, Just Don't Forget To Credit ;)
  */
+
 package master;
 import java.sql.*;
 import javax.swing.*;
@@ -11,7 +12,7 @@ import javax.swing.*;
  * @author nick
  */
 public class login extends javax.swing.JFrame {
-
+static int count_err = 0;
     /**
      * Creates new form login
      */
@@ -41,6 +42,9 @@ public class login extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
             }
         });
 
@@ -129,9 +133,11 @@ public class login extends javax.swing.JFrame {
                 val2check = rs.getString("CStat");
                 if (val2check.equals("401")){
                     JOptionPane.showMessageDialog(this,"Sorry You Haven't Activated Product Yet"); a = 1;
+                    logonbtn.setEnabled(false);
                 }
                 else if (val2check.equals("402")){
                     JOptionPane.showMessageDialog(this,"Program Has Been Blocked"); a = 2;
+                    logonbtn.setEnabled(false);
                 }
                 else {
                     logonbtn.setEnabled(true);
@@ -140,11 +146,11 @@ public class login extends javax.swing.JFrame {
                 switch (a){
                     case 1 :
                        an = JOptionPane.showConfirmDialog(this,"Product Not Activated! Activate Now?"); 
-                        if (an == JOptionPane.YES_OPTION){dispose();new activation_form().setVisible(true);}
+                        if (an == JOptionPane.YES_OPTION){dispose();new Integrity_Manager().setVisible(true);}
                         break;
                     case 2 :
                         an = JOptionPane.showConfirmDialog(this,"Product Blocked! Unlock?");
-                        if (an == JOptionPane.NO_OPTION){}break;
+                        if (an == JOptionPane.YES_OPTION){dispose();new Integrity_Manager().setVisible(true);}break;
                     default :
                         
                 }
@@ -168,13 +174,28 @@ public class login extends javax.swing.JFrame {
           JOptionPane.showMessageDialog(this,"Welcome, "+u.toUpperCase());
        }
        else{
+          
            JOptionPane.showMessageDialog(this,"Sorry, "+u.toUpperCase()+"\n"+"Try Again !","Login Failed",JOptionPane.ERROR_MESSAGE);
+           count_err = count_err +1;
        }
        // Incase there was some error spill it out
        if (mc.dbConnectExecute2Err != null){
        JOptionPane.showMessageDialog(this,mc.dbConnectExecute2Err);
     }
     }//GEN-LAST:event_logonbtnActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+      if (count_err == 3){
+          MainClass mc = new MainClass();
+          mc.showMessage("Maximum attempts made! Product Locked");
+          mc.dbConnectUpdate("insert into pro_stat values ('402');");
+          String err = mc.dbConnectUpdateErr;
+          if (err!=null){
+              mc.showMessage(err);
+          }
+          System.exit(0);
+      }
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
