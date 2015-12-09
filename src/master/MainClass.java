@@ -116,4 +116,22 @@ public class MainClass {
    public void resetProgramData(){
    
    }
+   String emptyCheckResult;
+   public void checkIfEmpty(String a,String b,String c,String d){
+       if (a.isEmpty()){
+           emptyCheckResult = "empty";
+       }
+       else if (b.isEmpty()){
+           emptyCheckResult = "empty";
+       }
+       else if (c.isEmpty()){
+           emptyCheckResult = "empty";
+       }
+       else if (d.isEmpty()){
+           emptyCheckResult = "empty";
+       }
+       else {
+           emptyCheckResult = "not_empty";
+       }
+   }
   }
