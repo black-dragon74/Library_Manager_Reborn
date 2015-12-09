@@ -24,6 +24,12 @@ public class MainClass {
     public static int unstat = 0;
     // End Db Connection
     
+    /*
+     * Begin inProgram Methods
+     * Please Don't Edit the lines below
+     * Do so only if you have optimum programming knowledge
+     * Thanks for understanding :)
+    */
     // Begin Encryption Method
     public String hashot;
     public void toHash(String in){
@@ -134,4 +140,26 @@ public class MainClass {
            emptyCheckResult = "not_empty";
        }
    }
+       // Method When You Have 3 outputs
+    public String dbConnectExecute3Out1,dbConnectExecute3Out2,dbConnectExecute3Out3,dbConnectExecute3RsError = null,dbConnectExecute3Err=null;
+    public void dbConnectExecute3(String sql,String wget1,String wget2,String wget3){
+        try{
+            Class.forName(cl);
+            Connection con = DriverManager.getConnection(url,user,pwd);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()== true){
+                dbConnectExecute3Out1 = rs.getString(wget1);
+                dbConnectExecute3Out2 = rs.getString(wget2);
+                dbConnectExecute3Out3 = rs.getString(wget3);
+            }
+            else {
+                dbConnectExecute3RsError = "not_found";
+            }
+        }
+        catch (ClassNotFoundException | SQLException e){
+            System.out.println(e.getMessage());
+            dbConnectExecute3Err = e.getMessage();
+        }
+    }
   }
