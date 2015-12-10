@@ -162,4 +162,29 @@ public class MainClass {
             dbConnectExecute3Err = e.getMessage();
         }
     }
+    
+    // Method When You Have 5 outputs
+    public String dbConnectExecute5Out1,dbConnectExecute5Out2,dbConnectExecute5Out3,dbConnectExecute5Out4,dbConnectExecute5Out5,dbConnectExecute5RsError = null,dbConnectExecute5Err=null;
+    public void connectEx5(String sql,String wget1,String wget2,String wget3,String wget4,String wget5){
+        try{
+            Class.forName(cl);
+            Connection con = DriverManager.getConnection(url,user,pwd);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()== true){
+                dbConnectExecute5Out1 = rs.getString(wget1);
+                dbConnectExecute5Out2 = rs.getString(wget2);
+                dbConnectExecute5Out3 = rs.getString(wget3);
+                dbConnectExecute5Out4 = rs.getString(wget4);
+                dbConnectExecute5Out5 = rs.getString(wget5);
+            }
+            else {
+                dbConnectExecute5RsError = "not_found";
+            }
+        }
+        catch (ClassNotFoundException | SQLException e){
+            System.out.println(e.getMessage());
+            dbConnectExecute5Err = e.getMessage();
+        }
+    }
   }
