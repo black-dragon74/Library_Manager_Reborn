@@ -5,8 +5,10 @@
         <group>
             <file>file:/Users/nick/NetBeansProjects/Library_Manager_Reborn/src/master/add_members.java</file>
             <file>file:/Users/nick/NetBeansProjects/Library_Manager_Reborn/src/master/MainClass.java</file>
-            <file>file:/Users/nick/NetBeansProjects/Library_Manager_Reborn/src/master/issue_form.java</file>
+            <file>file:/Users/nick/NetBeansProjects/Library_Manager_Reborn/src/master/login.java</file>
             <file>file:/Users/nick/NetBeansProjects/Library_Manager_Reborn/src/master/edit_members.java</file>
+            <file>file:/Users/nick/NetBeansProjects/Library_Manager_Reborn/src/master/login_modifier.java</file>
+            <file>file:/Users/nick/NetBeansProjects/Library_Manager_Reborn/src/master/members_list.java</file>
         </group>
     </open-files>
 </project-private>

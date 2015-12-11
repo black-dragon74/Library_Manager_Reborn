@@ -20,3 +20,5 @@ Insert into logon values('niraj','e555f863fb09593119fe2f3459e9783a');
 Create table library_users(Uid int(10),Name varchar(200),Mobile varchar(15),Email varchar(200),Doj varchar(40));
 
 Insert into library_users values('2974','Niraj Yadav','8302716971','nickk.2974@gmail.com','2015-12-11 07:56:00');
+
+Create table book_catalogue (Book_Id varchar(20) PRIMARY KEY,Book_Name varchar(300),Author varchar(100),Genre varchar(50),Date_Added varchar(30),Status varchar(10));
