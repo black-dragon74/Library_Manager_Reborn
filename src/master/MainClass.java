@@ -84,16 +84,20 @@ public class MainClass {
         }
     }
     // Method When You Have 2 outputs
-    public String dbConnectExecute2Out1,dbConnectExecute2Out2,dbConnectExecute2Err=null;
+    public String dbConnectExecute2Out1,dbConnectExecute2Out2,dbConnectExecute2RsError=null,dbConnectExecute2Err=null;
     public void dbConnectExecute2(String sql,String wget1,String wget2){
         try{
             Class.forName(cl);
             Connection con = DriverManager.getConnection(url,user,pwd);
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()== true){
+            if (rs.next()== true){
                 dbConnectExecute2Out1 = rs.getString(wget1);
                 dbConnectExecute2Out2 = rs.getString(wget2);
+                dbConnectExecute2RsError = "placeholder";
+            }
+            else{
+                dbConnectExecute2RsError = "dummy";
             }
         }
         catch (ClassNotFoundException | SQLException e){

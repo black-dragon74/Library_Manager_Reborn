@@ -22,3 +22,5 @@ Create table library_users(Uid int(10),Name varchar(200),Mobile varchar(15),Emai
 Insert into library_users values('2974','Niraj Yadav','8302716971','nickk.2974@gmail.com','2015-12-11 07:56:00');
 
 Create table book_catalogue (Book_Id varchar(20) PRIMARY KEY,Book_Name varchar(300),Author varchar(100),Genre varchar(50),Date_Added varchar(30),Status varchar(10));
+
+create table book_transactions(Mem_Id int(10),Mem_Name varchar(200),Book_Id varchar(30),Book_Name varchar(400),Date_Issued varchar(30));
