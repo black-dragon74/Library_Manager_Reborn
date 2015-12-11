@@ -20,7 +20,7 @@ public class MainClass {
     public String cl = "java.sql.DriverManager";
     public String user = "root";
     public String pwd = "ExDb20Tra"; //Change MySQL/MariaDb Password Here
-    public String url = "jdbc:mysql://localhost:3306/libnk";
+    public String url = "jdbc:mysql://localhost:3306/lib_reborn";
     public static int unstat = 0;
     // End Db Connection
     
