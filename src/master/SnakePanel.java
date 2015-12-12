@@ -1,11 +1,9 @@
 /*
  * Created for fun by Nick aka black-dragon74
  * Feel free to have fun with the code :)
- * You have all rights to do whatever you want, Just Don't Forget To Credit ;)
+ * You have all rights to do whatever you want, Just Don't Forget To Credit And Thank Me ;)
  */
 
-/* Game Code And Stuff By Tony Stark */
-/* Huge Thanks To Him */
 package master;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -34,7 +32,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
 /**
 *
-* @author Tony Stark
+* @author black.dragon74 aka Nick
 */
 public class SnakePanel extends JPanel implements Runnable{
 static Toolkit tool = Toolkit.getDefaultToolkit();
