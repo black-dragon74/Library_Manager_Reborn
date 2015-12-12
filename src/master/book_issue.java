@@ -85,11 +85,21 @@ MainClass nick = new MainClass();
         tfbookname.setEditable(false);
 
         tfstatus.setEditable(false);
+        tfstatus.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                tfstatusCaretUpdate(evt);
+            }
+        });
 
         jLabel6.setText("The Book's Current Status Is :");
 
         issuebtn.setText("ISSUE BOOK");
         issuebtn.setEnabled(false);
+        issuebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                issuebtnActionPerformed(evt);
+            }
+        });
 
         rest.setText("RESET THIS FORM");
         rest.addActionListener(new java.awt.event.ActionListener() {
@@ -203,7 +213,7 @@ MainClass nick = new MainClass();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        
+          dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void restActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restActionPerformed
@@ -231,14 +241,43 @@ MainClass nick = new MainClass();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // Additional Step to enable button
+
+    }//GEN-LAST:event_formWindowActivated
+
+    private void tfstatusCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_tfstatusCaretUpdate
+         // Additional Step to enable button
         String a,b;
         a = tfemail.getText();
         b = tfstatus.getText();
         if (a.isEmpty()==false && b.isEmpty() == false){
             issuebtn.setEnabled(true);
         }
-    }//GEN-LAST:event_formWindowActivated
+    }//GEN-LAST:event_tfstatusCaretUpdate
+
+    private void issuebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issuebtnActionPerformed
+        String cs;
+        cs = tfstatus.getText();
+        if (cs.equals("AVAILABLE")){
+            String i,n,bi,bn;
+            i = tfid.getText();
+            n = tfname.getText();
+            bi = tfbid.getText();
+            bn = tfbookname.getText();
+            nick.dbConnectUpdate("Insert into book_transactions values ('"+i+"','"+n+"','"+bi+"','"+bn+"',now());");
+            nick.dbConnectUpdate("update book_catalogue set Status = 'ISSUED' where Book_Id = '"+bi+"';");
+            // Error Spiller
+            String e = nick.dbConnectUpdateErr;
+            if (e != null){
+                nick.showMessage(e);
+            }
+            else{
+                nick.showMessage("Book Issued To: "+n);
+            }
+        }
+        else{
+            nick.showMessage("Sorry This Book Is Already Issued.");
+        }
+    }//GEN-LAST:event_issuebtnActionPerformed
 
     /**
      * @param args the command line arguments

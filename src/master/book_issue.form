@@ -181,6 +181,9 @@
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="tfstatusCaretUpdate"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
@@ -192,6 +195,9 @@
         <Property name="text" type="java.lang.String" value="ISSUE BOOK"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="issuebtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="rest">
       <Properties>
