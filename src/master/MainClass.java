@@ -181,6 +181,7 @@ public class MainClass {
                 dbConnectExecute5Out3 = rs.getString(wget3);
                 dbConnectExecute5Out4 = rs.getString(wget4);
                 dbConnectExecute5Out5 = rs.getString(wget5);
+                dbConnectExecute5RsError = "something";
             }
             else {
                 dbConnectExecute5RsError = "not_found";

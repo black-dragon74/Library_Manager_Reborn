@@ -265,6 +265,8 @@ MainClass nick = new MainClass();
             bn = tfbookname.getText();
             nick.dbConnectUpdate("Insert into book_transactions values ('"+i+"','"+n+"','"+bi+"','"+bn+"',now());");
             nick.dbConnectUpdate("update book_catalogue set Status = 'ISSUED' where Book_Id = '"+bi+"';");
+            // To log this transaction
+            nick.dbConnectUpdate("Insert into book_transaction_log values ('"+i+"','"+n+"','"+bi+"','"+bn+"',now(),'NOT_DEP');");
             // Error Spiller
             String e = nick.dbConnectUpdateErr;
             if (e != null){
