@@ -192,4 +192,31 @@ public class MainClass {
             dbConnectExecute5Err = e.getMessage();
         }
     }
+    
+    public String dbConnectExecute6Out1,dbConnectExecute6Out2,dbConnectExecute6Out3,dbConnectExecute6Out4,dbConnectExecute6Out5,dbConnectExecute6Out6,dbConnectExecute6RsError = null,dbConnectExecute6Err=null;
+    public void connectEx6(String sql,String wget1,String wget2,String wget3,String wget4,String wget5,String wget6){
+        try{
+            Class.forName(cl);
+            Connection con = DriverManager.getConnection(url,user,pwd);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()== true){
+                dbConnectExecute6Out1 = rs.getString(wget1);
+                dbConnectExecute6Out2 = rs.getString(wget2);
+                dbConnectExecute6Out3 = rs.getString(wget3);
+                dbConnectExecute6Out4 = rs.getString(wget4);
+                dbConnectExecute6Out5 = rs.getString(wget5);
+                dbConnectExecute6Out6 = rs.getString(wget6);
+                dbConnectExecute6RsError = "something";
+            }
+            else {
+                dbConnectExecute6RsError = "not_found";
+            }
+        }
+        catch (ClassNotFoundException | SQLException e){
+            System.out.println(e.getMessage());
+            dbConnectExecute6Err = e.getMessage();
+        }
+    }
+    
   }

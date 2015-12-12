@@ -3,6 +3,9 @@
  * Feel free to have fun with the code :)
  * You have all rights to do whatever you want, Just Don't Forget To Credit ;)
  */
+
+/* Game Code And Stuff By Tony Stark */
+/* Huge Thanks To Him */
 package master;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;

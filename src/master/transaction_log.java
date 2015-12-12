@@ -11,12 +11,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author nick
  */
-public class list_of_issued_books extends javax.swing.JFrame {
+public class transaction_log extends javax.swing.JFrame {
 
     /**
      * Creates new form list_of_issued_books
      */
-    public list_of_issued_books() {
+    public transaction_log() {
         initComponents();
     }
 
@@ -35,7 +35,7 @@ public class list_of_issued_books extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("List Of Issued Books | Library Manager Reborn");
+        setTitle("Transaction Log | Library Manager Reborn");
         setResizable(false);
 
         tbl.setModel(new javax.swing.table.DefaultTableModel(
@@ -43,7 +43,7 @@ public class list_of_issued_books extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mem ID", "Meme Name", "Book ID", "Book Name", "Date Issued"
+                "Mem ID", "Meme Name", "Book ID", "Book Name", "Date Issued", "Date Deposited"
             }
         ));
         jScrollPane1.setViewportView(tbl);
@@ -94,26 +94,31 @@ public class list_of_issued_books extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         MainClass nick = new MainClass();
-        nick.connectEx5("select * from book_transactions;", "Mem_Id", "Mem_Name", "Book_Id", "Book_Name", "Date_Issued");
-        String i,n,bi,bn,di;
-        i = nick.dbConnectExecute5Out1;
-        n = nick.dbConnectExecute5Out2;
-        bi = nick.dbConnectExecute5Out3;
-        bn = nick.dbConnectExecute5Out4;
-        di = nick.dbConnectExecute5Out5;
+        nick.connectEx6("select * from book_transaction_log;", "Mem_Id", "Mem_Name", "Book_Id", "Book_Name", "Date_Issued","Date_Deposit");
+        String i,n,bi,bn,di,dp;
+        i = nick.dbConnectExecute6Out1;
+        n = nick.dbConnectExecute6Out2;
+        bi = nick.dbConnectExecute6Out3;
+        bn = nick.dbConnectExecute6Out4;
+        di = nick.dbConnectExecute6Out5;
+        dp = nick.dbConnectExecute6Out6;
         DefaultTableModel mdl;
         mdl = (DefaultTableModel) tbl.getModel();
         int ccc = mdl.getRowCount();
         for (int ii=1;ii <= ccc;ii++){
               mdl.removeRow(0);
         }
-        String error = nick.dbConnectExecute5RsError;
+        String error = nick.dbConnectExecute6RsError;
         if ("something".equals(error)){
-            Object res[] = {i,n,bi,bn,di};
+            Object res[] = {i,n,bi,bn,di,dp};
             mdl.addRow(res);
         }
         else{
-            nick.showMessage("No Books Are Due!");
+            nick.showMessage("No Transations Found!");
+        }
+        // Error Spiller
+        if (nick.dbConnectExecute6Err != null){
+            nick.showMessage(nick.dbConnectExecute6Err);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -138,20 +143,21 @@ public class list_of_issued_books extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(list_of_issued_books.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaction_log.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(list_of_issued_books.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaction_log.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(list_of_issued_books.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaction_log.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(list_of_issued_books.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(transaction_log.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new list_of_issued_books().setVisible(true);
+                new transaction_log().setVisible(true);
             }
         });
     }
