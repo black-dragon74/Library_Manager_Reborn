@@ -124,7 +124,10 @@ public class MainClass {
        getInputOut = JOptionPane.showInputDialog(null,quest);
    }
    public void resetProgramData(){
-   
+        dbConnectUpdate("truncate book_catalogue");
+        dbConnectUpdate("truncate book_transaction_log");
+        dbConnectUpdate("truncate book_transactions");
+        dbConnectUpdate("truncate library_users");
    }
    String emptyCheckResult;
    public void checkIfEmpty(String a,String b,String c,String d){

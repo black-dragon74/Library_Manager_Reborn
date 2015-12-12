@@ -159,9 +159,11 @@ public class Integrity_Manager extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
        MainClass nick = new MainClass();
-       nick.confirm("Sure to Reset "+"\n"+"This Will erase the follwing things :-"+"\n"+"- All Records"+"\n"+"- All Issue/Deposit History", "Destory Everything?");
+       nick.confirm("Sure to Reset "+"\n"+"This Will erase the follwing things :-"+"\n"+"- All Books"+"\n"+"- All Issue/Deposit History", "Destory Everything?");
        if (nick.confirmOut.equals("yes")){
            nick.resetProgramData();
+           nick.showMessage("Program Reset, Rebooting Protocol!");
+           System.exit(0);
        }
        else {
        nick.showMessage("Whew! Saved");

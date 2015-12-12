@@ -172,6 +172,8 @@ static int count_err = 0;
        mc.dbConnectExecute2("select * from logon;","alpha","bravo");
        if (u.equals(mc.dbConnectExecute2Out1) && dec_pass.equals(mc.dbConnectExecute2Out2)){
           JOptionPane.showMessageDialog(this,"Welcome, "+u.toUpperCase());
+          dispose();
+          new activity_chooser().setVisible(true);
        }
        else{
           

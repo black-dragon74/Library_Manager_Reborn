@@ -87,16 +87,18 @@ public class activation_form extends javax.swing.JFrame {
       MainClass nick = new MainClass();
       String act = new String(codetf.getPassword());
       if (act.equals("Activate_Software")){
-      } else {
           nick.showMessage("Activating Software");
           nick.dbConnectUpdate("truncate pro_stat");
           nick.dbConnectUpdate("insert into pro_stat values('403');");
           nick.showMessage("Software Activated!"+"\n"+"Please Restart");
-          String err = nick.dbConnectUpdateErr;
+      } 
+      else {
+          // Place Holder
+        }
+      String err = nick.dbConnectUpdateErr;
           if (err != null){
               nick.showMessage(""+err);
           }
-        }
     }//GEN-LAST:event_codetfCaretUpdate
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
