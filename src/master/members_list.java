@@ -5,6 +5,11 @@
  */
 package master;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.MessageFormat;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -125,30 +130,34 @@ public class members_list extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         MainClass nick = new MainClass();
-        String id,name,mobile,email,doj;
-        nick.connectEx5("select * from library_users;", "Uid", "Name", "Mobile", "Email", "Doj");
-        id = nick.dbConnectExecute5Out1;
-        name = nick.dbConnectExecute5Out2;
-        mobile = nick.dbConnectExecute5Out3;
-        email = nick.dbConnectExecute5Out4;
-        doj = nick.dbConnectExecute5Out5;
-        String rs_error = nick.dbConnectExecute5RsError;
-        String exe_error = nick.dbConnectExecute5Err;
-        if (rs_error == null){
-           DefaultTableModel mdl = (DefaultTableModel) tbl.getModel();
-           // To eradicate extra rows
-           for (int i = 1; i <=mdl.getRowCount();i++){
-               mdl.removeRow(0);
-           }
-           Object result[] = {id,name,mobile,email,doj};
-           mdl.addRow(result);
+        DefaultTableModel mdl = (DefaultTableModel) tbl.getModel();
+        int cnt = mdl.getRowCount();
+        for (int i =1;i <=cnt;i++){
+            mdl.removeRow(0);
         }
-        else {
-            nick.showMessage("I can't find any members yet!");
+        String i,n,bi,bn,di,tr = null,si;
+        try{
+            Class.forName("java.sql.DriverManager");
+            Connection con = DriverManager.getConnection(nick.url,nick.user,nick.pwd);
+            Statement smt = con.createStatement();
+            String q = "select * from library_users;";
+            ResultSet rs = smt.executeQuery(q);
+            while (rs.next()){
+                i = rs.getString("Uid");
+                n = rs.getString("Name");
+                bi = rs.getString("Mobile");
+                bn = rs.getString("Email");
+                di = rs.getString("Doj");
+                Object res[] = {i,n,bi,bn,di};
+                mdl.addRow(res);
+                tr = "placeholder";
+            }
+            if (tr == null){
+                nick.showMessage("No Books Have Been Issued YET!");
+            }
         }
-        // Incase Exception Is There Show That
-        if (exe_error != null){
-            nick.showMessage(exe_error);
+        catch (ClassNotFoundException | SQLException e){
+            nick.showMessage(e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -5,6 +5,7 @@
  */
 package master;
 
+import java.sql.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -45,7 +46,15 @@ public class list_of_issued_books extends javax.swing.JFrame {
             new String [] {
                 "Mem ID", "Meme Name", "Book ID", "Book Name", "Date Issued"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tbl);
 
         jButton1.setText("FETCH LIST");
@@ -94,26 +103,34 @@ public class list_of_issued_books extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         MainClass nick = new MainClass();
-        nick.connectEx5("select * from book_transactions;", "Mem_Id", "Mem_Name", "Book_Id", "Book_Name", "Date_Issued");
-        String i,n,bi,bn,di;
-        i = nick.dbConnectExecute5Out1;
-        n = nick.dbConnectExecute5Out2;
-        bi = nick.dbConnectExecute5Out3;
-        bn = nick.dbConnectExecute5Out4;
-        di = nick.dbConnectExecute5Out5;
-        DefaultTableModel mdl;
-        mdl = (DefaultTableModel) tbl.getModel();
-        int ccc = mdl.getRowCount();
-        for (int ii=1;ii <= ccc;ii++){
-              mdl.removeRow(0);
+        DefaultTableModel mdl = (DefaultTableModel) tbl.getModel();
+        int cnt = mdl.getRowCount();
+        for (int i =1;i <=cnt;i++){
+            mdl.removeRow(0);
         }
-        String error = nick.dbConnectExecute5RsError;
-        if ("something".equals(error)){
-            Object res[] = {i,n,bi,bn,di};
-            mdl.addRow(res);
+        String i,n,bi,bn,di,tr = null;
+        try{
+            Class.forName("java.sql.DriverManager");
+            Connection con = DriverManager.getConnection(nick.url,nick.user,nick.pwd);
+            Statement smt = con.createStatement();
+            String q = "select * from book_transactions;";
+            ResultSet rs = smt.executeQuery(q);
+            while (rs.next()){
+                i = rs.getString("Mem_Id");
+                n = rs.getString("Mem_Name");
+                bi = rs.getString("Book_Id");
+                bn = rs.getString("Book_Name");
+                di = rs.getString("Date_Issued");
+                Object res[] = {i,n,bi,bn,di};
+                mdl.addRow(res);
+                tr = "placeholder";
+            }
+            if (tr == null){
+                nick.showMessage("No Books Have Been Issued YET!");
+            }
         }
-        else{
-            nick.showMessage("No Books Are Due!");
+        catch (ClassNotFoundException | SQLException e){
+            nick.showMessage(e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

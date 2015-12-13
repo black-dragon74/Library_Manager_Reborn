@@ -5,6 +5,11 @@
  */
 package master;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -45,7 +50,15 @@ public class transaction_log extends javax.swing.JFrame {
             new String [] {
                 "Mem ID", "Meme Name", "Book ID", "Book Name", "Date Issued", "Date Deposited"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tbl);
 
         jButton1.setText("FETCH LIST");
@@ -94,31 +107,35 @@ public class transaction_log extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         MainClass nick = new MainClass();
-        nick.connectEx6("select * from book_transaction_log;", "Mem_Id", "Mem_Name", "Book_Id", "Book_Name", "Date_Issued","Date_Deposit");
-        String i,n,bi,bn,di,dp;
-        i = nick.dbConnectExecute6Out1;
-        n = nick.dbConnectExecute6Out2;
-        bi = nick.dbConnectExecute6Out3;
-        bn = nick.dbConnectExecute6Out4;
-        di = nick.dbConnectExecute6Out5;
-        dp = nick.dbConnectExecute6Out6;
-        DefaultTableModel mdl;
-        mdl = (DefaultTableModel) tbl.getModel();
-        int ccc = mdl.getRowCount();
-        for (int ii=1;ii <= ccc;ii++){
-              mdl.removeRow(0);
+        DefaultTableModel mdl = (DefaultTableModel) tbl.getModel();
+        int cnt = mdl.getRowCount();
+        for (int i =1;i <=cnt;i++){
+            mdl.removeRow(0);
         }
-        String error = nick.dbConnectExecute6RsError;
-        if ("something".equals(error)){
-            Object res[] = {i,n,bi,bn,di,dp};
-            mdl.addRow(res);
+        String i,n,bi,bn,di,tr = null,si;
+        try{
+            Class.forName("java.sql.DriverManager");
+            Connection con = DriverManager.getConnection(nick.url,nick.user,nick.pwd);
+            Statement smt = con.createStatement();
+            String q = "select * from book_transaction_log;";
+            ResultSet rs = smt.executeQuery(q);
+            while (rs.next()){
+                i = rs.getString("Mem_Id");
+                n = rs.getString("Mem_Name");
+                bi = rs.getString("Book_Id");
+                bn = rs.getString("Book_Name");
+                di = rs.getString("Date_Issued");
+                si = rs.getString("Date_Deposit");
+                Object res[] = {i,n,bi,bn,di,si};
+                mdl.addRow(res);
+                tr = "placeholder";
+            }
+            if (tr == null){
+                nick.showMessage("No Books Have Been Issued YET!");
+            }
         }
-        else{
-            nick.showMessage("No Transations Found!");
-        }
-        // Error Spiller
-        if (nick.dbConnectExecute6Err != null){
-            nick.showMessage(nick.dbConnectExecute6Err);
+        catch (ClassNotFoundException | SQLException e){
+            nick.showMessage(e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
